@@ -1,0 +1,15 @@
+﻿<Properties StartupConfiguration="{699A58E5-0695-4362-83A7-402CE15A8E45}|Default">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.GTKMono PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="GTKMono\MainWindow.cs">
+    <Files>
+      <File FileName="GTKMono\Program.cs" Line="17" Column="1" />
+      <File FileName="GTKMono\MainWindow.cs" Line="25" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+</Properties>
