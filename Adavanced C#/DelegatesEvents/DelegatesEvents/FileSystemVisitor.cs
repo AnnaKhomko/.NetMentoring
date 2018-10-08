@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DelegatesEvents.EventArguments;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -9,25 +10,28 @@ namespace DelegatesEvents
         private Func<FileSystemInfo, bool> filterFunc;
         public event EventHandler<SystemVisitorArgs> startEvent;
         public event EventHandler<SystemVisitorArgs> finishEvent;
-        public event EventHandler<SystemVisitorArgs> fileFindedEvent;
-        public event EventHandler<SystemVisitorArgs> directoryFindedEvent;
-        public event EventHandler<SystemVisitorArgs> fileFilteredEvent;
-        public event EventHandler<SystemVisitorArgs> directoryFilteredEvent;
+        public event EventHandler<FilteredAndFindedEventArgs<FileInfo>> fileFindedEvent;
+        public event EventHandler<FilteredAndFindedEventArgs<DirectoryInfo>> directoryFindedEvent;
+        public event EventHandler<FilteredAndFindedEventArgs<FileInfo>> fileFilteredEvent;
+        public event EventHandler<FilteredAndFindedEventArgs<DirectoryInfo>> directoryFilteredEvent;
+
+        private readonly FIleSystemProcessStartegy fileSystemProcessingStrategy;
 
         public FileSystemVisitor(Func<FileSystemInfo, bool> filterFunc)
         {
             this.filterFunc = filterFunc;
+            fileSystemProcessingStrategy = new FIleSystemProcessStartegy();
         }
 
         public void StartProcess(string startPoint)
         {
-            startEvent.Invoke(this, new SystemVisitorArgs());
+            startEvent?.Invoke(this, new SystemVisitorArgs());
             var list = GetFileSystemTree(startPoint, CurrentAction.ContinueSearch);
             foreach (var item in list)
             {
                 Console.WriteLine(item);
             }
-            finishEvent.Invoke(this, new SystemVisitorArgs());
+            finishEvent?.Invoke(this, new SystemVisitorArgs());
         }
 
         private IEnumerable<FileSystemInfo> GetFileSystemTree(string startPoint, CurrentAction currentAction)
@@ -40,22 +44,13 @@ namespace DelegatesEvents
                 {
                     yield break;
                 }
-                if (item is FileInfo)
-                {
-                    fileFindedEvent.Invoke(this, new SystemVisitorArgs(item));
-                }
-                else if (item is DirectoryInfo)
-                {
-                    directoryFindedEvent.Invoke(this, new SystemVisitorArgs(item));
-                }
+                FileInfoEventHandling(item);
 
                 if (filterFunc.Invoke(item))
                 {
                     if (item is FileInfo)
                     {
-                        SystemVisitorArgs args = new SystemVisitorArgs(currentAction.Action, item);
-                        fileFilteredEvent.Invoke(this, args);
-                        currentAction.Action = args.Action;
+                        InvokeFileFilteredEvent(currentAction, item);
                         switch (currentAction.Action)
                         {
                             case ActionType.Continue:
@@ -72,9 +67,7 @@ namespace DelegatesEvents
 
                     else if (item is DirectoryInfo)
                     {
-                        SystemVisitorArgs args = new SystemVisitorArgs(currentAction.Action, item);
-                        directoryFilteredEvent.Invoke(this, args);
-                        currentAction.Action = args.Action;
+                        InvokeDirectoryFilteredEvent(currentAction, item);
                         switch (currentAction.Action)
                         {
                             case ActionType.Continue:
@@ -93,9 +86,46 @@ namespace DelegatesEvents
                         }
                     }
                 }
-
             }
         }
+
+        private void InvokeDirectoryFilteredEvent(CurrentAction currentAction, FileSystemInfo item)
+        {
+            var args = new FilteredAndFindedEventArgs<DirectoryInfo>(currentAction.Action, item);
+            directoryFilteredEvent?.Invoke(this, args);
+            currentAction.Action = args.Action;
+        }
+
+        private void InvokeFileFilteredEvent(CurrentAction currentAction, FileSystemInfo item)
+        {
+            var args = new FilteredAndFindedEventArgs<FileInfo>(currentAction.Action, item);
+            fileFilteredEvent?.Invoke(this, args);
+            currentAction.Action = args.Action;
+        }
+
+        private void FileInfoEventHandling(FileSystemInfo item)
+        {
+            if (item is FileInfo)
+            {
+                fileFindedEvent?.Invoke(this, new FilteredAndFindedEventArgs<FileInfo>(item));
+            }
+            else if (item is DirectoryInfo)
+            {
+                directoryFindedEvent?.Invoke(this, new FilteredAndFindedEventArgs<DirectoryInfo>(item));
+            }
+        }
+
+        /*private ActionType ProcessFile(FileInfo file)
+        {
+            return _fileSystemProcessingStrategy
+                .ProcessItemFinded(file, fileFilteredEvent);
+        }
+
+        private ActionType ProcessDirectory(DirectoryInfo directory)
+        {
+            return _fileSystemProcessingStrategy
+                .ProcessItemFinded(directory, directoryFilteredEvent);
+        }*/
 
         private class CurrentAction
         {
