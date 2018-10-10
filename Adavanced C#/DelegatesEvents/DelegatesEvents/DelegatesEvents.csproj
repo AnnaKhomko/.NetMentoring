@@ -45,8 +45,9 @@
   <ItemGroup>
     <Compile Include="ActionType.cs" />
     <Compile Include="EventArguments\FilteredAndFindedEventArgs.cs" />
-    <Compile Include="FIleSystemProcessStartegy.cs" />
+    <Compile Include="FileSystemProcessStrategy.cs" />
     <Compile Include="FileSystemVisitor.cs" />
+    <Compile Include="IFileSystemProcessStrategy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EventArguments\SystemVisitorArgs.cs" />

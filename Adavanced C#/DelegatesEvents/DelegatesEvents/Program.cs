@@ -12,10 +12,12 @@ namespace DelegatesEvents
         public static void Main(string[] args)
         {
             string fileDirectory = @"D:\English";
+            DirectoryInfo directoryInfo = new DirectoryInfo(fileDirectory);
             FileSystemVisitor filesv = new FileSystemVisitor((item) =>
-           {
+            {
                return !item.Extension.Contains(".jpg");
-           });
+            });
+
             filesv.startEvent += (e, s) =>
              {
                  Console.WriteLine("Search starts!");
@@ -28,7 +30,7 @@ namespace DelegatesEvents
 
             filesv.fileFindedEvent += (e, s) =>
             {
-                Console.WriteLine($"File {s.Item.Name} finded" );
+                Console.WriteLine($"File {s.Item.Name} finded");
             };
 
             filesv.directoryFindedEvent += (e, s) =>
@@ -38,13 +40,12 @@ namespace DelegatesEvents
 
             filesv.fileFilteredEvent += (e, s) =>
             {
-                if (s.Item.Name.Contains("Writing_Sample"))
+                if (s.Item.Name.Contains("1.csv"))
                 {
                     s.Action = ActionType.Skip;
                 }
                 Console.WriteLine($"File {s.Item.Name} filtered");
             };
-
 
             filesv.directoryFilteredEvent += (e, s) =>
             {
@@ -54,7 +55,11 @@ namespace DelegatesEvents
                 }
                 Console.WriteLine($"Directory {s.Item.Name} filtered");
             };
-            filesv.StartProcess(fileDirectory);
+
+            foreach (var fileSysInfo in filesv.StartProcess(directoryInfo))
+            {
+                Console.WriteLine(fileSysInfo);
+            }
 
             Console.ReadKey();
         }

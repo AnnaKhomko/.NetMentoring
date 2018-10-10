@@ -1,26 +1,22 @@
 ﻿using System;
 using System.IO;
 using DelegatesEvents;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NUnit.Framework;
 
 namespace Tests
 {
-    [TestClass]
+    [TestFixture]
     public class DelegateEventMockTests
     {
-        [TestFixture]
-        public class FileSystemProcessingStrategyTests
+        private IFileSystemProcessStrategy fileSystemProcessingStrategy;
+        private Mock<DirectoryInfo> directoryInfoMock;
+
+        [SetUp]
+        public void TestInit()
         {
-            private Mock<FileSystemInfo> _fileSystemInfoMock;
-
-            [SetUp]
-            public void TestInit()
-            {
-                _fileSystemInfoMock = new Mock<FileSystemInfo>();
-            }
-
+            fileSystemProcessingStrategy = new FileSystemProcessStrategy();
+            directoryInfoMock = new Mock<DirectoryInfo>();
         }
     }
 }
