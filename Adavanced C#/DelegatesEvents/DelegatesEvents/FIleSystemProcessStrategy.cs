@@ -1,6 +1,6 @@
 ﻿using DelegatesEvents.EventArguments;
 using System;
-using System.Collections.Generic;
+using DelegatesEvents.Wrappers.Interfaces;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,30 +10,34 @@ namespace DelegatesEvents
 {
     public class FileSystemProcessStrategy : IFileSystemProcessStrategy
     {
-        public ActionType ProcessItemFinded<TItemInfo>(TItemInfo itemInfo, 
-            Func<FileSystemInfo, bool> filterFunc, 
-            EventHandler<FilteredAndFindedEventArgs<TItemInfo>> itemFinded, 
+        public ActionType ProcessItemFinded<TItemInfo>(TItemInfo itemInfo,
+            Func<IFileSystemInfoWrapper, bool> filterFunc,
+            EventHandler<FilteredAndFindedEventArgs<TItemInfo>> itemFinded,
             EventHandler<FilteredAndFindedEventArgs<TItemInfo>> itemfiltered,
-            Action<EventHandler<FilteredAndFindedEventArgs<TItemInfo>>, FilteredAndFindedEventArgs<TItemInfo>> eventEmitter) where TItemInfo : FileSystemInfo
+            Action<EventHandler<FilteredAndFindedEventArgs<TItemInfo>>, FilteredAndFindedEventArgs<TItemInfo>> eventEmitter) where TItemInfo : IFileSystemInfoWrapper
         {
-            FilteredAndFindedEventArgs<TItemInfo> args = new FilteredAndFindedEventArgs<TItemInfo>
+            var args = new FilteredAndFindedEventArgs<TItemInfo>
             {
                 Item = itemInfo,
                 Action = ActionType.Continue
             };
+
             eventEmitter(itemFinded, args);
 
             if (filterFunc(itemInfo))
             {
+                eventEmitter(itemfiltered, args);
+
                 args = new FilteredAndFindedEventArgs<TItemInfo>
                 {
                     Item = itemInfo,
                     Action = ActionType.Continue
                 };
-                eventEmitter(itemfiltered, args);
+
                 return args.Action;
             }
-            else return ActionType.Skip;
+
+            return ActionType.Skip;
         }
     }
 }

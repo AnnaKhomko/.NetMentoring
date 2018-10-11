@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DelegatesEvents.Wrappers;
+using DelegatesEvents.Wrappers.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,41 +15,42 @@ namespace DelegatesEvents
         {
             string fileDirectory = @"D:\English";
             DirectoryInfo directoryInfo = new DirectoryInfo(fileDirectory);
+
             FileSystemVisitor filesv = new FileSystemVisitor((item) =>
             {
-               return !item.Extension.Contains(".jpg");
+                return !item.Name.Contains(".jpg");
             });
 
-            filesv.startEvent += (e, s) =>
+            filesv.OnStart += (e, s) =>
              {
                  Console.WriteLine("Search starts!");
              };
 
-            filesv.finishEvent += (e, s) =>
+            filesv.OnFinish += (e, s) =>
             {
                 Console.WriteLine("Search ends!");
             };
 
-            filesv.fileFindedEvent += (e, s) =>
+            filesv.OnFileFinded += (e, s) =>
             {
                 Console.WriteLine($"File {s.Item.Name} finded");
             };
 
-            filesv.directoryFindedEvent += (e, s) =>
+            filesv.OnDirectoryFinded += (e, s) =>
             {
                 Console.WriteLine($"Directory {s.Item.Name} finded");
             };
 
-            filesv.fileFilteredEvent += (e, s) =>
+            filesv.OnFileFiltered += (e, s) =>
             {
-                if (s.Item.Name.Contains("1.csv"))
+                if (s.Item.Name.Contains("cat"))
                 {
                     s.Action = ActionType.Skip;
                 }
                 Console.WriteLine($"File {s.Item.Name} filtered");
             };
 
-            filesv.directoryFilteredEvent += (e, s) =>
+            filesv.OnDirectoryFiltered += (e, s) =>
             {
                 if (s.Item.Name.Length <= 8)
                 {
@@ -56,7 +59,9 @@ namespace DelegatesEvents
                 Console.WriteLine($"Directory {s.Item.Name} filtered");
             };
 
-            foreach (var fileSysInfo in filesv.StartProcess(directoryInfo))
+            var wrapper = new DirectoryInfoWrapper(directoryInfo);
+
+            foreach (IFileSystemInfoWrapper fileSysInfo in filesv.StartProcess(wrapper))
             {
                 Console.WriteLine(fileSysInfo);
             }

@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DelegatesEvents.Wrappers.Interfaces;
+using System;
 
 namespace DelegatesEvents.EventArguments
 {
-    public class FilteredAndFindedEventArgs<T> : EventArgs where T : FileSystemInfo
+    public class FilteredAndFindedEventArgs<T> : EventArgs where T : IFileSystemInfoWrapper
     {
         public ActionType Action { get; set; }
-        public FileSystemInfo Item { get; set; }
+        public IFileSystemInfoWrapper Item { get; set; }
 
         public FilteredAndFindedEventArgs() { }
-        public FilteredAndFindedEventArgs(FileSystemInfo item)
+        public FilteredAndFindedEventArgs(IFileSystemInfoWrapper item)
         {
             Item = item;
         }
-        public FilteredAndFindedEventArgs(ActionType type, FileSystemInfo item)
+        public FilteredAndFindedEventArgs(ActionType type, IFileSystemInfoWrapper item)
         {
             Action = type;
             Item = item;

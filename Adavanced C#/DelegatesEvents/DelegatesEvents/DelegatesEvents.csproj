@@ -44,9 +44,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionType.cs" />
+    <Compile Include="Wrappers\DirectoryInfoWrapper.cs" />
     <Compile Include="EventArguments\FilteredAndFindedEventArgs.cs" />
+    <Compile Include="Wrappers\FileInfoWrapper.cs" />
+    <Compile Include="Wrappers\FileSystemInfoWrapper.cs" />
     <Compile Include="FileSystemProcessStrategy.cs" />
     <Compile Include="FileSystemVisitor.cs" />
+    <Compile Include="Wrappers\Interfaces\IDirectoryInfoWrapper.cs" />
+    <Compile Include="Wrappers\Interfaces\IFileInfoWrapper.cs" />
+    <Compile Include="Wrappers\Interfaces\IFileSystemInfoWrapper.cs" />
     <Compile Include="IFileSystemProcessStrategy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
