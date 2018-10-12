@@ -56,6 +56,7 @@ namespace Tests
             }
 
             CollectionAssert.AreEqual(expectedList, actualList);
+            directoryInfoMock.Verify(_ => _.GetFileSystemInfos(), Times.Once);
         }
 
         [Test]
@@ -94,6 +95,7 @@ namespace Tests
             }
 
             CollectionAssert.AreEqual(expectedList, actualList);
+            directoryInfoMock.Verify(_ => _.GetFileSystemInfos(), Times.Once);
         }
 
         [Test]
@@ -126,6 +128,7 @@ namespace Tests
             }
 
             CollectionAssert.AreEqual(expectedList, actualList);
+            directoryInfoMock.Verify(_ => _.GetFileSystemInfos(), Times.Once);
         }
     }
 }
