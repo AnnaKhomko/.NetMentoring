@@ -11,12 +11,11 @@ namespace FirstCharsApp
         static void Main(string[] args)
         {
             var enteredLines = new List<string>();
-            Console.WriteLine("Enter lines. Press ESC to stop entering.");
+            var lineProcess = new ProcessLine();
 
-            while (Console.ReadKey(true).Key != ConsoleKey.Escape)
-            {
-                enteredLines.Add(Console.ReadLine());
-            }
+            enteredLines = lineProcess.GetEnteredLines();
+            lineProcess.PrintFirstChar(enteredLines);
+            Console.ReadKey();
         }
     }
 }
