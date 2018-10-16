@@ -39,17 +39,14 @@ namespace CustomParserLibrary
                 }
                 if (temporaryValue < int.MinValue || temporaryValue > int.MaxValue)
                 {
-                    throw new FormatException($"Input string '{inputString}' has wrong format. Expected: int. Actual: long.");
+                    throw new FormatException($"Input string '{inputString}' has wrong format.");
                 }
                 intResult = (int)temporaryValue;
             }
-            else if (IsFloat(inputString))
-            {
-                throw new FormatException($"Input string '{inputString}' has wrong format. Expected: int. Actual: float.");
-            }
             else
-                throw new FormatException($"Input string '{inputString}' has wrong format. Expected: int. Actual: string.");
-
+            {
+                throw new FormatException($"Input string '{inputString}' has wrong format.");
+            }
         }
 
         private void Parse(string strToParse, ref long temporaryValue)
@@ -64,13 +61,6 @@ namespace CustomParserLibrary
         private bool IsInt(string stringToValidate)
         {
             var res = new Regex(@"^[+|-]?\d{1,10}$");
-            return res.IsMatch(stringToValidate);
-        }
-
-        private bool IsFloat(string stringToValidate)
-        {
-            string separ = NumberFormatInfo.CurrentInfo.NumberDecimalSeparator;
-            var res = new Regex(@"\s*[0-9]*\" + separ + "[0-9]+$");
             return res.IsMatch(stringToValidate);
         }
 

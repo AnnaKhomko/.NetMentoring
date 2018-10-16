@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomParserLibrary", "CustomParserLibrary\CustomParserLibrary.csproj", "{A7481E86-2BD6-48C1-A811-DFF3D41C0219}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParserLibraryTests", "ParserLibraryTests\ParserLibraryTests.csproj", "{B7D4BA52-B9A1-459B-9496-55F58B9BEE83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParserTests", "ParserTests\ParserTests.csproj", "{9F1B6A83-EF11-4756-BE0A-7B4FC413ECBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{A7481E86-2BD6-48C1-A811-DFF3D41C0219}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7481E86-2BD6-48C1-A811-DFF3D41C0219}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7481E86-2BD6-48C1-A811-DFF3D41C0219}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7D4BA52-B9A1-459B-9496-55F58B9BEE83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7D4BA52-B9A1-459B-9496-55F58B9BEE83}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7D4BA52-B9A1-459B-9496-55F58B9BEE83}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7D4BA52-B9A1-459B-9496-55F58B9BEE83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F1B6A83-EF11-4756-BE0A-7B4FC413ECBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F1B6A83-EF11-4756-BE0A-7B4FC413ECBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F1B6A83-EF11-4756-BE0A-7B4FC413ECBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F1B6A83-EF11-4756-BE0A-7B4FC413ECBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

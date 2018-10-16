@@ -41,9 +41,7 @@ namespace FirstCharsApp
 
         private void ValidateLine(string line)
         {
-            Match match = Regex.Match(line, @"^[ \t\r\n\s]*$");
-
-            if (string.IsNullOrEmpty(line) || match.Success)
+            if (string.IsNullOrWhiteSpace(line))
             {
                 throw new EmptyLineException();
             }
